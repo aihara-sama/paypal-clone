@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 
 import { ResetPassword } from "components/auth/ResetPassword";
 import { SplashScreen } from "components/common/SplashScreen";
-import { getAuth, verifyPasswordResetCode } from "firebase/auth";
 import { toast } from "react-hot-toast";
 
 const ResetPasswordPage: NextPage = () => {
@@ -22,10 +21,7 @@ const ResetPasswordPage: NextPage = () => {
 
     (async () => {
       try {
-        await verifyPasswordResetCode(
-          getAuth(),
-          router.query.oobCode as string
-        );
+        //
         setIsCodeValid(true);
       } catch (error) {
         toast.error("The reset link has expired or is invalid");

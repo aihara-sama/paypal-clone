@@ -8,8 +8,6 @@ import {
   Typography,
 } from "@mui/material";
 import Logo from "components/common/Logo";
-import { FirebaseError } from "firebase/app";
-import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { Form, FormikProvider, useFormik } from "formik";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -30,19 +28,13 @@ export const ForgetPassword = () => {
         .email("Please enter a valid email")
         .required("Please enter email"),
     }) as Yup.SchemaOf<ForgetPasswordRequest>,
-    onSubmit: async ({ email }, actions) => {
+    onSubmit: async (_, actions) => {
       actions.setSubmitting(true);
       try {
-        await sendPasswordResetEmail(getAuth(), email);
         toast.success("Password reset link has been sent to your email");
         router.push("/auth/sign-in");
       } catch (error) {
-        const errorMessage =
-          error instanceof FirebaseError && error.code === "auth/user-not-found"
-            ? "User with this email does not exist"
-            : "Something went wrong";
-
-        toast.error(errorMessage);
+        //
       } finally {
         actions.setSubmitting(false);
       }

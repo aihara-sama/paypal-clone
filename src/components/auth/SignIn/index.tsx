@@ -17,21 +17,12 @@ import {
   Typography,
 } from "@mui/material";
 import Logo from "components/common/Logo";
-import { FirebaseError } from "firebase/app";
-import type { AuthProvider } from "firebase/auth";
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-} from "firebase/auth";
 import { Form, FormikProvider, useFormik } from "formik";
 import { useTranslation } from "next-i18next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
-import { toast } from "react-hot-toast";
 import type { SignInRequest } from "types/auth";
-import { facebookProvider, googleProvider } from "utils/firebase";
 import getErrorProps from "utils/getErrorProps";
 import * as Yup from "yup";
 
@@ -53,41 +44,20 @@ export const SignIn = () => {
         .required("Please enter password")
         .min(8, "Password must be minimum 8 characters"),
     }) as Yup.SchemaOf<SignInRequest>,
-    onSubmit: async (values, actions) => {
+    onSubmit: async (_, actions) => {
       actions.setSubmitting(true);
       try {
-        await signInWithEmailAndPassword(
-          getAuth(),
-          values.email,
-          values.password
-        );
         router.replace(
           router.query.redirect ? (router.query.redirect as string) : "/"
         );
       } catch (error) {
-        const errorMessage =
-          error instanceof FirebaseError && error.code === "auth/wrong-password"
-            ? "Incorrect email and/or password"
-            : "Something went wrong";
-
-        toast.error(errorMessage);
+        //
       } finally {
         actions.setSubmitting(false);
       }
     },
     validateOnMount: true,
   });
-
-  const providerSignUp = async (provider: AuthProvider) => {
-    try {
-      await signInWithPopup(getAuth(), provider);
-      router.replace(
-        router.query.redirect ? (router.query.redirect as string) : "/"
-      );
-    } catch {
-      toast.error("Something went wrong");
-    }
-  };
 
   return (
     <FormikProvider value={formik}>
@@ -108,18 +78,10 @@ export const SignIn = () => {
               {t("signIn")}
             </Typography>
             <Box display="flex" gap={2}>
-              <Button
-                fullWidth
-                onClick={() => providerSignUp(googleProvider)}
-                startIcon={<GoogleIcon />}
-              >
+              <Button fullWidth startIcon={<GoogleIcon />}>
                 Google
               </Button>
-              <Button
-                onClick={() => providerSignUp(facebookProvider)}
-                fullWidth
-                startIcon={<FacebookIcon />}
-              >
+              <Button fullWidth startIcon={<FacebookIcon />}>
                 Facebook
               </Button>
             </Box>

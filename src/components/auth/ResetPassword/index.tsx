@@ -10,7 +10,6 @@ import {
   Typography,
 } from "@mui/material";
 import Logo from "components/common/Logo";
-import { confirmPasswordReset, getAuth } from "firebase/auth";
 import { Form, FormikProvider, useFormik } from "formik";
 import { useRouter } from "next/router";
 import type { FunctionComponent } from "react";
@@ -24,7 +23,7 @@ interface IProps {
   code: string;
 }
 
-export const ResetPassword: FunctionComponent<IProps> = ({ code }) => {
+export const ResetPassword: FunctionComponent<IProps> = () => {
   const [showPassword, setShowPassword] = React.useState<boolean>(false);
   const router = useRouter();
 
@@ -37,10 +36,9 @@ export const ResetPassword: FunctionComponent<IProps> = ({ code }) => {
         .required("Please enter password")
         .min(8, "Password must be minimum 8 characters"),
     }) as Yup.SchemaOf<ResetPasswordRequest>,
-    onSubmit: async ({ password }, actions) => {
+    onSubmit: async (_, actions) => {
       actions.setSubmitting(true);
       try {
-        await confirmPasswordReset(getAuth(), code, password);
         toast.success("New password has been set successfully");
         router.push("/auth/sign-in");
       } catch {

@@ -32,7 +32,7 @@ function MyApp(props: MyAppProps) {
   return (
     <CacheProvider value={emotionCache}>
       <Head>
-        <title>Study Guru</title>
+        <title>Home - PayPal</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
       <Meta />

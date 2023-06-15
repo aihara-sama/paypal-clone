@@ -16,26 +16,18 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import type { AuthProvider } from "firebase/auth";
-import {
-  createUserWithEmailAndPassword,
-  getAuth,
-  signInWithPopup,
-} from "firebase/auth";
+
 import { Form, FormikProvider, useFormik } from "formik";
 import { useTranslation } from "next-i18next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import type { FunctionComponent } from "react";
 import React from "react";
-import toast from "react-hot-toast";
 import type { SignUpRequest } from "types/auth";
 import getErrorProps from "utils/getErrorProps";
 import * as Yup from "yup";
 
 import Logo from "components/common/Logo";
-import { FirebaseError } from "firebase/app";
-import { facebookProvider, googleProvider } from "utils/firebase";
 
 interface ISignUpProps {}
 
@@ -57,40 +49,18 @@ const SignUp: FunctionComponent<ISignUpProps> = () => {
         .required("Please enter password")
         .min(8, "Password must be minimum 8 characters"),
     }) as Yup.SchemaOf<SignUpRequest>,
-    onSubmit: async (values, actions) => {
+    onSubmit: async (_, actions) => {
       actions.setSubmitting(true);
       try {
-        await createUserWithEmailAndPassword(
-          getAuth(),
-          values.email,
-          values.password
-        );
         router.replace(
           router.query.redirect ? (router.query.redirect as string) : "/"
         );
       } catch (error) {
-        const errorMessage =
-          error instanceof FirebaseError &&
-          error.code === "auth/email-already-in-use"
-            ? "User with this email aready exists"
-            : "Something went wrong";
-
-        toast.error(errorMessage);
+        //
       }
     },
     validateOnMount: true,
   });
-
-  const providerSignUp = async (provider: AuthProvider) => {
-    try {
-      await signInWithPopup(getAuth(), provider);
-      router.replace(
-        router.query.redirect ? (router.query.redirect as string) : "/"
-      );
-    } catch {
-      toast.error("Something went wrong");
-    }
-  };
 
   return (
     <FormikProvider value={formik}>
@@ -111,18 +81,10 @@ const SignUp: FunctionComponent<ISignUpProps> = () => {
               {t("signUp")}
             </Typography>
             <Box display="flex" gap={2}>
-              <Button
-                fullWidth
-                onClick={() => providerSignUp(googleProvider)}
-                startIcon={<GoogleIcon />}
-              >
+              <Button fullWidth startIcon={<GoogleIcon />}>
                 Google
               </Button>
-              <Button
-                onClick={() => providerSignUp(facebookProvider)}
-                fullWidth
-                startIcon={<FacebookIcon />}
-              >
+              <Button fullWidth startIcon={<FacebookIcon />}>
                 Facebook
               </Button>
             </Box>
