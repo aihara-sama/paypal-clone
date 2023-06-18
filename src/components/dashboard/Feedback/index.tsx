@@ -242,7 +242,7 @@ const Feedback: FunctionComponent<IFeedbackProps> = () => {
             right={{ xs: isFeedbackOpen ? 36 : "-389px" }}
             sx={{
               transition: "right 0.3s",
-              overflow: "scroll",
+              overflow: "auto",
               boxShadow: "rgba(0, 0, 0, 0.15) 0px 2px 2px 0px",
             }}
             bgcolor="#fff"
