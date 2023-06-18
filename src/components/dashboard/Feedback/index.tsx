@@ -247,7 +247,7 @@ const Feedback: FunctionComponent<IFeedbackProps> = () => {
             }}
             bgcolor="#fff"
             position="absolute"
-            width={386}
+            width={391}
             maxHeight={566}
           >
             <Box py={3} px={3}>
