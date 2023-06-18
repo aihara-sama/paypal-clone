@@ -7,6 +7,6 @@ const withBundleAnalyzer = bundleAnalyzer({
 });
 
 module.exports = withBundleAnalyzer({
-  reactStrictMode: true,
+  reactStrictMode: false,
   i18n,
 });

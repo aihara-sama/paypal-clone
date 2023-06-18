@@ -1,7 +1,7 @@
 import { ThemeProvider as MuiThemeProvider } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
-import type { RootState } from "store";
+import type { ApplicationState } from "store";
 import type { ThemeType } from "theme/index";
 import { createTheme } from "theme/index";
 
@@ -12,7 +12,7 @@ interface ThemeProviderProps {
 export const ThemeProvider: React.FC<ThemeProviderProps> = (props) => {
   const { children } = props;
   const [currentTheme, setCurrentTheme] = React.useState<ThemeType>("light");
-  const theme = useSelector((state: RootState) => state.app.theme);
+  const { theme } = useSelector((state: ApplicationState) => state.app);
 
   React.useEffect(() => {
     setCurrentTheme(theme);

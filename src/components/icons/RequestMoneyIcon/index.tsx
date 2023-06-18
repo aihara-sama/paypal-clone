@@ -1,13 +1,17 @@
 import type { FunctionComponent } from "react";
 
-interface IRequestMoneyIconProps {}
+interface IRequestMoneyIconProps {
+  size?: number;
+}
 
-const RequestMoneyIcon: FunctionComponent<IRequestMoneyIconProps> = () => {
+const RequestMoneyIcon: FunctionComponent<IRequestMoneyIconProps> = ({
+  size = 30,
+}) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="40"
-      height="40"
+      width={size}
+      height={size}
       viewBox="0 0 40 40"
       fill="none"
     >

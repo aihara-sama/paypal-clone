@@ -1,13 +1,17 @@
 import type { FunctionComponent } from "react";
 
-interface IInvoicingIconProps {}
+interface IInvoicingIconProps {
+  size?: number;
+}
 
-const InvoicingIcon: FunctionComponent<IInvoicingIconProps> = () => {
+const InvoicingIcon: FunctionComponent<IInvoicingIconProps> = ({
+  size = 30,
+}) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="40"
-      height="40"
+      width={size}
+      height={size}
       viewBox="0 0 40 40"
       fill="none"
     >
