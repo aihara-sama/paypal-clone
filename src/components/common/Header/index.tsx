@@ -262,38 +262,44 @@ export const Header = () => {
                   width: "100%",
                 }}
               >
-                <Box sx={{ p: 1, bgcolor: "background.paper", px: 35 }}>
-                  <Box display="flex" gap={10} py={3}>
-                    {poperTab !== "none" &&
-                      menu[poperTab].map((item, i) => {
-                        return (
-                          <Box key={i}>
-                            <Typography mb={2} fontSize={16} fontWeight={600}>
-                              {item.title}
-                            </Typography>
-                            <Box display="flex" flexDirection="column" gap={1}>
-                              {item.items.map(({ link, title }, idx) => (
-                                <MuiLink
-                                  key={idx}
-                                  component={Link}
-                                  href={link}
-                                  sx={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    ":hover": { color: "#0070ba" },
-                                  }}
-                                  underline="hover"
-                                  color="rgb(74, 74, 74)"
-                                >
-                                  {title}
-                                </MuiLink>
-                              ))}
+                <Paper elevation={3}>
+                  <Box sx={{ p: 1, bgcolor: "background.paper", px: 35 }}>
+                    <Box display="flex" gap={10} py={3}>
+                      {poperTab !== "none" &&
+                        menu[poperTab].map((item, i) => {
+                          return (
+                            <Box key={i}>
+                              <Typography mb={2} fontSize={16} fontWeight={600}>
+                                {item.title}
+                              </Typography>
+                              <Box
+                                display="flex"
+                                flexDirection="column"
+                                gap={1}
+                              >
+                                {item.items.map(({ link, title }, idx) => (
+                                  <MuiLink
+                                    key={idx}
+                                    component={Link}
+                                    href={link}
+                                    sx={{
+                                      display: "flex",
+                                      alignItems: "center",
+                                      ":hover": { color: "#0070ba" },
+                                    }}
+                                    underline="hover"
+                                    color="rgb(74, 74, 74)"
+                                  >
+                                    {title}
+                                  </MuiLink>
+                                ))}
+                              </Box>
                             </Box>
-                          </Box>
-                        );
-                      })}
+                          );
+                        })}
+                    </Box>
                   </Box>
-                </Box>
+                </Paper>
               </Popper>
             </Box>
           </Container>
