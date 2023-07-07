@@ -8,20 +8,29 @@ import {
   IconButton,
   Link as MuiLink,
   Paper,
+  Popper,
   Typography,
 } from "@mui/material";
 import MobileNavbarDrawer from "components/common/MobileNavbarDrawer";
 import UserIcon from "components/icons/UserIcon";
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useRef, useState } from "react";
 import Logo from "../Logo";
 import UserPopper from "./UserPopper";
+import { menu } from "./menu";
 
 export const Header = () => {
   const [isMobileNavbarDrawerOpen, setIsMobileNavbarDrawerOpen] =
     useState<boolean>(false);
   const [isMenuItemDrawerOpen, setIsMenuItemDrawerOpen] = useState(false);
   const [currentMenuItem, setCurrentMenuItem] = useState("");
+  const [isPoperOpen, setIsPoperOpen] = useState(false);
+  const menuLinksRef = useRef<HTMLDivElement>();
+  const [poperTab, setPoperTab] = useState<
+    "activity" | "pay" | "marketing" | "none"
+  >("none");
+  const router = useRouter();
 
   return (
     <Box>
@@ -140,62 +149,99 @@ export const Header = () => {
           }}
         >
           <Container maxWidth="xl">
-            <Box display="flex" alignItems="center" gap={3}>
+            <Box
+              display="flex"
+              alignItems="center"
+              gap={3}
+              onMouseLeave={() => {
+                setIsPoperOpen(false);
+                setPoperTab("none");
+              }}
+            >
               <Logo />
-              <Box display="flex" gap={3}>
+              <Box display="flex" gap={3} ref={menuLinksRef}>
                 <MuiLink
+                  onMouseEnter={() => setPoperTab("none")}
                   component={Link}
                   href="/dashboard"
                   underline="none"
                   color="#0070ba"
                   fontWeight={500}
                   sx={{
-                    borderBottom: `3px solid #0070ba`,
+                    borderBottom: `3px solid ${
+                      router.pathname === "/dashboard" && poperTab === "none"
+                        ? "#0070ba"
+                        : "transparent"
+                    }`,
                     py: "5px",
                   }}
                 >
                   Home
                 </MuiLink>
+                <Box display="flex" alignItems="center" gap={3}>
+                  <Typography
+                    onMouseEnter={() => {
+                      if (isPoperOpen) setPoperTab("activity");
+                    }}
+                    color="#0070ba"
+                    fontWeight={500}
+                    sx={{
+                      cursor: "pointer",
+                      py: "5px",
+                      borderBottom: `3px solid ${
+                        poperTab === "activity" ? "#0070ba" : "transparent"
+                      }`,
+                    }}
+                    onClick={() => {
+                      setIsPoperOpen(true);
+                      setPoperTab("activity");
+                    }}
+                  >
+                    Activity
+                  </Typography>
+                  <Typography
+                    onClick={() => {
+                      setIsPoperOpen(true);
+                      setPoperTab("pay");
+                    }}
+                    onMouseEnter={() => {
+                      if (isPoperOpen) setPoperTab("pay");
+                    }}
+                    color="#0070ba"
+                    fontWeight={500}
+                    sx={{
+                      cursor: "pointer",
+                      py: "5px",
+                      borderBottom: `3px solid ${
+                        poperTab === "pay" ? "#0070ba" : "transparent"
+                      }`,
+                    }}
+                  >
+                    Pay & Get Paid
+                  </Typography>
+                  <Typography
+                    onClick={() => {
+                      setIsPoperOpen(true);
+                      setPoperTab("marketing");
+                    }}
+                    onMouseEnter={() => {
+                      if (isPoperOpen) setPoperTab("marketing");
+                    }}
+                    color="#0070ba"
+                    fontWeight={500}
+                    sx={{
+                      cursor: "pointer",
+                      py: "5px",
+                      borderBottom: `3px solid ${
+                        poperTab === "marketing" ? "#0070ba" : "transparent"
+                      }`,
+                    }}
+                  >
+                    Marketing For Growth
+                  </Typography>
+                </Box>
                 <MuiLink
-                  component={Link}
-                  href="#"
-                  underline="none"
-                  color="#0070ba"
-                  fontWeight={500}
-                  sx={{
-                    py: "5px",
-                    borderBottom: `3px solid transparent`,
-                  }}
-                >
-                  Activity
-                </MuiLink>
-                <MuiLink
-                  component={Link}
-                  href="#"
-                  underline="none"
-                  color="#0070ba"
-                  fontWeight={500}
-                  sx={{
-                    py: "5px",
-                    borderBottom: `3px solid transparent`,
-                  }}
-                >
-                  Pay & Get Paid
-                </MuiLink>
-                <MuiLink
-                  component={Link}
-                  href="#"
-                  underline="none"
-                  color="#0070ba"
-                  fontWeight={500}
-                  sx={{
-                    py: "5px",
-                    borderBottom: `3px solid transparent`,
-                  }}
-                >
-                  Marketing For Growth
-                </MuiLink>
-                <MuiLink
+                  onMouseEnter={() => setPoperTab("none")}
                   component={Link}
                   href="#"
                   underline="none"
@@ -209,6 +255,46 @@ export const Header = () => {
                   Business Tools
                 </MuiLink>
               </Box>
+              <Popper
+                open={isPoperOpen && poperTab !== "none"}
+                anchorEl={menuLinksRef.current}
+                sx={{
+                  width: "100%",
+                }}
+              >
+                <Box sx={{ p: 1, bgcolor: "background.paper", px: 35 }}>
+                  <Box display="flex" gap={10} py={3}>
+                    {poperTab !== "none" &&
+                      menu[poperTab].map((item, i) => {
+                        return (
+                          <Box key={i}>
+                            <Typography mb={2} fontSize={16} fontWeight={600}>
+                              {item.title}
+                            </Typography>
+                            <Box display="flex" flexDirection="column" gap={1}>
+                              {item.items.map(({ link, title }, idx) => (
+                                <MuiLink
+                                  key={idx}
+                                  component={Link}
+                                  href={link}
+                                  sx={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    ":hover": { color: "#0070ba" },
+                                  }}
+                                  underline="hover"
+                                  color="rgb(74, 74, 74)"
+                                >
+                                  {title}
+                                </MuiLink>
+                              ))}
+                            </Box>
+                          </Box>
+                        );
+                      })}
+                  </Box>
+                </Box>
+              </Popper>
             </Box>
           </Container>
         </Paper>
