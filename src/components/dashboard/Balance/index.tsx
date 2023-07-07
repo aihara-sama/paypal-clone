@@ -32,7 +32,7 @@ const Balance: FunctionComponent<IBalanceProps> = () => {
         />
       </Box>
       <Typography fontSize={40} color="rgb(104, 113, 115)">
-        €0,00 EUR*
+        $0,00 USD*
       </Typography>
       <Typography fontSize={15} mb={1}>
         Available

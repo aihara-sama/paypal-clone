@@ -145,7 +145,7 @@ export const Header = () => {
               <Box display="flex" gap={3}>
                 <MuiLink
                   component={Link}
-                  href="#"
+                  href="/dashboard"
                   underline="none"
                   color="#0070ba"
                   fontWeight={500}

@@ -54,7 +54,7 @@ const Insights: FunctionComponent<IInsightsProps> = () => {
           Money in
         </Typography>
         <Typography fontSize={30} color="#2c2e2f">
-          0,00 €
+          0,00 $
         </Typography>
         <Tooltip
           placement="bottom-start"
@@ -101,7 +101,7 @@ const Insights: FunctionComponent<IInsightsProps> = () => {
           Money out
         </Typography>
         <Typography fontSize={30} color="#2c2e2f">
-          0,00 €
+          0,00 $
         </Typography>
         <Tooltip
           placement="bottom-start"
