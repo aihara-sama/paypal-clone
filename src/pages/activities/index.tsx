@@ -1,6 +1,8 @@
 import SearchIcon from "@mui/icons-material/Search";
 import {
   Box,
+  Button,
+  Divider,
   FormControl,
   FormGroup,
   IconButton,
@@ -11,7 +13,9 @@ import {
   Select,
   TextField,
 } from "@mui/material";
+import { DatePicker } from "@mui/x-date-pickers";
 import { Layout } from "components/common/Layout";
+import { subMonths } from "date-fns";
 import type { GetStaticProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useState } from "react";
@@ -175,7 +179,7 @@ const ActivitiesPage = () => {
                 },
               }}
               size="small"
-              defaultValue="Active"
+              defaultValue="All activity"
             >
               <MenuItem
                 sx={{
@@ -221,7 +225,7 @@ const ActivitiesPage = () => {
                     fontSize: 18,
                   },
                 }}
-                value="Payments sent"
+                value="Past 30 days"
               >
                 Payments sent
               </MenuItem>
@@ -530,6 +534,87 @@ const ActivitiesPage = () => {
               >
                 Denied
               </MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl sx={{ minWidth: 150 }}>
+            <InputLabel id="Date-label">Date</InputLabel>
+            <Select
+              id="Date"
+              label="Date"
+              labelId="Date-label"
+              MenuProps={{
+                anchorOrigin: {
+                  horizontal: "left",
+                  vertical: "bottom",
+                },
+                transformOrigin: {
+                  vertical: "top",
+                  horizontal: "left",
+                },
+                PaperProps: {
+                  sx: {
+                    mt: 1,
+                  },
+                },
+              }}
+              size="small"
+              defaultValue={2023}
+            >
+              <MenuItem value="Past 30 days">Past 30 days</MenuItem>
+              <MenuItem value="Past 90 days">Past 90 days</MenuItem>
+              <MenuItem value="2023">2023</MenuItem>
+              <MenuItem value="2022">2022</MenuItem>
+              <Divider />
+              <Box py={1}>
+                <Box px={2} mb={2}>
+                  <DatePicker
+                    defaultValue={subMonths(new Date(), 3)}
+                    sx={{
+                      button: {
+                        mr: 0,
+                      },
+                      input: {
+                        width: "130px",
+                      },
+                    }}
+                    label="From"
+                  />
+                </Box>
+                <Box px={2}>
+                  <DatePicker
+                    maxDate={new Date()}
+                    defaultValue={new Date()}
+                    sx={{
+                      button: {
+                        mr: 0,
+                      },
+                      input: {
+                        width: "130px",
+                      },
+                    }}
+                    label="To"
+                  />
+                </Box>
+              </Box>
+              <Box px={2} my={1} display="flex" justifyContent="center">
+                <Button
+                  fullWidth
+                  variant="contained"
+                  sx={{
+                    borderRadius: "18px",
+                    backgroundColor: "#0070ba",
+                    ":hover": {
+                      backgroundColor: "#003087",
+                    },
+                    paddingLeft: "24px !important",
+                    paddingRight: "24px !important",
+                    py: 1,
+                  }}
+                  // onClick={() => handleClose(true)}
+                >
+                  Apply
+                </Button>
+              </Box>
             </Select>
           </FormControl>
         </Box>
