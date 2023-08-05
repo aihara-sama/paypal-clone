@@ -28,6 +28,9 @@ const MenuItemDrawer: FunctionComponent<IMenuItemDrawerProps> = ({
   return (
     <Hidden mdUp>
       <Drawer
+        sx={{
+          zIndex: 99999,
+        }}
         anchor="right"
         variant="persistent"
         open={isDrawer}
@@ -43,6 +46,7 @@ const MenuItemDrawer: FunctionComponent<IMenuItemDrawerProps> = ({
             backgroundImage: "none",
             p: 4,
             top: 60,
+            zIndex: 99999,
           },
         }}
       >

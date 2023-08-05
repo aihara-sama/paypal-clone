@@ -65,6 +65,7 @@ const MobileNavbarDrawer: FunctionComponent<IProps> = ({
             backgroundImage: "none",
             p: 4,
             top: 60,
+            zIndex: 99999,
           },
         }}
       >

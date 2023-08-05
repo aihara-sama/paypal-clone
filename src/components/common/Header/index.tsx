@@ -33,7 +33,15 @@ export const Header = () => {
   const router = useRouter();
 
   return (
-    <Box>
+    <Box
+      sx={{
+        position: "fixed",
+        zIndex: 99999,
+        top: 0,
+        right: 0,
+        left: 0,
+      }}
+    >
       <Box
         component="header"
         sx={{
@@ -41,7 +49,7 @@ export const Header = () => {
           top: 0,
           left: 0,
           px: 2,
-          zIndex: "appBar",
+          zIndex: 99999,
           backgroundImage:
             "linear-gradient(143.27deg, rgb(0, 94, 166) 0%, rgb(21, 70, 160) 100%)",
         }}
@@ -146,6 +154,7 @@ export const Header = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
+            zIndex: 99999,
           }}
         >
           <Container maxWidth="xl">
@@ -260,6 +269,7 @@ export const Header = () => {
                 anchorEl={menuLinksRef.current}
                 sx={{
                   width: "100%",
+                  zIndex: 99999,
                 }}
               >
                 <Paper elevation={3}>
